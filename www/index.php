@@ -20,12 +20,10 @@ define('MODELS_PATH', realpath(BASE_PATH.'/inc/models'));
 spl_autoload_register(function($className){//Автоподключим классы
     $tmp = explode('\\', $className);
     $classPath = realpath(BASE_PATH.'/inc/'.implode('/', $tmp).'.php');
-    //var_dump(BASE_PATH.'/inc/'.implode('/', $tmp).'.php');
     if( $classPath)
-        //exit('controller not found');
-    if( file_exists($classPath)) {
-        require_once($classPath);
-    }
+        if( file_exists($classPath)) {
+            require_once($classPath);
+        }
 });
 
 require_once(BASE_PATH.'/inc/config.php');

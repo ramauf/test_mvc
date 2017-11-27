@@ -1,20 +1,13 @@
 php_value display_errors 1
-php_value error_reporting E_ALL
+php_value error_reporting 0
 AddDefaultCharset UTF-8
 DirectoryIndex index.php
-
-
-
 
 # Turn on URL rewriting
 RewriteEngine On
 
 # Installation directory
 RewriteBase /
-
-
-# Protect application and system files from being viewed
-RewriteRule ^(?:application|modules|system)\b.* index.php/$0 [L]
 
 # Allow any files or directories that exist to be displayed directly
 RewriteCond %{REQUEST_FILENAME} !-f
