@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 27 2017 г., 12:30
+-- Время создания: Ноя 28 2017 г., 15:09
 -- Версия сервера: 5.7.16
 -- Версия PHP: 5.6.29
 
@@ -47,7 +47,10 @@ INSERT INTO `operations` (`id`, `user_id`, `amount`, `type`, `address`, `date`) 
   (12, 7, '100.00', 'out', '123567890', 1511769644),
   (14, 7, '50.00', 'out', '243423', 1511771764),
   (15, 7, '12.00', 'out', 'wdwefw', 1511773605),
-  (16, 7, '11.00', 'out', 'erferfer', 1511773707);
+  (16, 7, '11.00', 'out', 'erferfer', 1511773707),
+  (17, 7, '30.00', 'out', 'wferfer', 1511870099),
+  (18, 7, '3.00', 'out', 'qwdwde', 1511870163),
+  (19, 7, '100.00', 'out', 'rfgtymk,jl', 1511870578);
 
 -- --------------------------------------------------------
 
@@ -59,16 +62,17 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `login` varchar(16) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `payPass` varchar(32) NOT NULL
+  `payPass` varchar(32) NOT NULL,
+  `balance` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `payPass`) VALUES
-  (6, 'wefw', '76d80224611fc919a5d54f0ff9fba446', '621a72de1437ba88e1e3560c9b33bc96'),
-  (7, 'login', '5f4dcc3b5aa765d61d8327deb882cf99', '6cb75f652a9b52798eb6cf2201057c73');
+INSERT INTO `users` (`id`, `login`, `password`, `payPass`, `balance`) VALUES
+  (6, 'wefw', '76d80224611fc919a5d54f0ff9fba446', '621a72de1437ba88e1e3560c9b33bc96', '0.00'),
+  (7, 'login', '5f4dcc3b5aa765d61d8327deb882cf99', '6cb75f652a9b52798eb6cf2201057c73', '1000.57');
 
 --
 -- Индексы сохранённых таблиц
@@ -95,7 +99,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `operations`
 --
 ALTER TABLE `operations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
