@@ -1,25 +1,17 @@
 <?php
-namespace Controllers\Index;
+namespace App\Controllers\Index;
 
-use Core\DB;
-use Core\Helpers\Filter;
-use Core\Helpers\Http;
-use Core\Session;
-use Core\View;
-use Models\CitiesCollection;
-use Models\CityObject;
-use Models\CountryObject;
-use Models\EventObject;
-use Models\EventsCollection;
-use Models\OperationObject;
-use Models\OperationsCollection;
-use Models\RegionsCollection;
+use App\Core\Helpers\Http;
+use App\Core\Session;
+use App\Core\View;
+use App\Models\OperationObject;
+use App\Models\OperationsCollection;
 
 class Operations extends IndexController{
 
     public function pageIndex( $status = 'empty'){
-        $user = Session::get('user');
-        Session::close();
+        $user = Session::getInstance()->get('user');
+        Session::getInstance()->close();
         $OperationsCollection = new OperationsCollection();
         $OperationsCollection->begin();
         $OperationsCollection->fetch([

@@ -1,15 +1,13 @@
 <?php
-namespace Controllers\Index;
+namespace App\Controllers\Index;
 
-use Core\DB;
-use Core\Helpers\Http;
-use Core\Session;
-use Core\View;
+use App\Core\Helpers\Http;
+use App\Core\Session;
 
 class Main extends IndexController{
 
     public function pageIndex(){
-        if( is_null( Session::get('user'))){
+        if( is_null( Session::getInstance()->get('user'))){
             Http::redirect('/login');
         }else{
             Http::redirect('/operations');

@@ -1,6 +1,6 @@
 <?php
-namespace Core\Models;
-use Core\DB;
+namespace App\Core\Models;
+use App\Core\DB;
 
 abstract class AbstractObject extends AbstractData{
     private $primaryField = '';

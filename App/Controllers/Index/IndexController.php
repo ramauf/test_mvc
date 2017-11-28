@@ -1,10 +1,9 @@
 <?php
-namespace Controllers\Index;
+namespace App\Controllers\Index;
 
-use Controllers\BaseController;
-use Core\Session;
-use Core\View;
-use Models\MenuService;
+use App\Controllers\BaseController;
+use App\Core\Session;
+use App\Core\View;
 
 class IndexController extends BaseController{
     protected $authTemplate = 'main_auth.tpl';
@@ -12,9 +11,9 @@ class IndexController extends BaseController{
 
     public function __construct( $params ){
         $this->queryParams = $params;
-        Session::start();
+        Session::getInstance()->start();
         View::setTemplateDir('templates/index');
-        if( Session::get('user') === null ){
+        if( Session::getInstance()->get('user') === null ){
             View::setTemplate($this->unauthTemplate);
         }else{
             View::setTemplate($this->authTemplate);

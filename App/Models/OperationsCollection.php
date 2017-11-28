@@ -1,8 +1,8 @@
 <?php
-namespace Models;
-use Core\DB;
-use Core\Models\AbstractCollection;
-use Core\Models\AbstractField;
+namespace App\Models;
+use App\Core\DB;
+use App\Core\Models\AbstractCollection;
+use App\Core\Models\AbstractField;
 
 class OperationsCollection extends AbstractCollection{
     public static $typeNames = [

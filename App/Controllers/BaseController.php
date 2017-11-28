@@ -1,8 +1,5 @@
 <?php
-namespace Controllers;
-use Core\Session;
-use Core\View;
-use Models\Vk;
+namespace App\Controllers;
 
 class BaseController{
     protected $templateDir;

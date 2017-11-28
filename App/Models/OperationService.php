@@ -1,6 +1,6 @@
 <?php
-namespace Models;
-use Core\DB;
+namespace App\Models;
+use App\Core\DB;
 class OperationService{
     const OPERATION_GET_BALANCE = '-- OPERATION_GET_BALANCE
 SELECT SUM(`amount`) AS `amount`, `type`

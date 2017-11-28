@@ -5,4 +5,3 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 define('CACHE_ENABLED', false);
-?>

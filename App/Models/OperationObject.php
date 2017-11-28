@@ -1,7 +1,7 @@
 <?php
-namespace Models;
-use Core\Models\AbstractField;
-use Core\Models\AbstractObject;
+namespace App\Models;
+use App\Core\Models\AbstractField;
+use App\Core\Models\AbstractObject;
 
 class OperationObject extends AbstractObject{
     protected $table = 'operations';

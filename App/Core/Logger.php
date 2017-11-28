@@ -1,12 +1,7 @@
 <?php
-namespace Core;
-class Logger{
-    public static function log($file, $data){
-        return LoggerClass::getInstance()->log($file, $data);
-    }
-}
+namespace App\Core;
 
-class LoggerClass{
+class Logger{
     private static $instance = null;
     private $logDir;
     public function __construct(){

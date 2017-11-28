@@ -1,11 +1,10 @@
 <?php
-namespace Controllers\Index;
+namespace App\Controllers\Index;
 
-use Core\DB;
-use Core\Helpers\Http;
-use Core\Session;
-use Core\View;
-use Models\UserObject;
+use App\Core\Helpers\Http;
+use App\Core\Session;
+use App\Core\View;
+use App\Models\UserObject;
 
 class Auth extends IndexController{
 
@@ -14,18 +13,18 @@ class Auth extends IndexController{
         if( !empty( $this->postParams())){
             $UserObject = new UserObject();
             if( $UserObject->login( $this->postParams())){
-                Session::set('user', $UserObject->export());
+                Session::getInstance()->set('user', $UserObject->export());
                 Http::redirect('/');
             }else{
                 View::assign('errors', ['Неверный логин или пароль']);
             }
         }
-        if( Session::get('user') != null )
+        if( Session::getInstance()->get('user') != null )
             Http::redirect('/');
     }
 
     public function pageLogout(){
-        Session::del('user');
+        Session::getInstance()->del('user');
         Http::redirect('/');
     }
 }

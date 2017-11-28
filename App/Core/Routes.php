@@ -1,15 +1,7 @@
 <?php
-namespace Core;
-class Routes{
-    public static function addRoute($url, $className, $methodName, $params){
-        return RoutesClass::getInstance()->addRoute($url, $className, $methodName, $params);
-    }
-    public static function loadRoute($url){
-        return RoutesClass::getInstance()->loadRoute($url);
-    }
-}
+namespace App\Core;
 
-class RoutesClass{
+class Routes{
     private static $instance = null;
     private $routes = [];
     public static function getInstance(){

@@ -1,28 +1,7 @@
 <?php
-namespace Core;
+namespace App\Core;
 
 class Session{
-    public static function start(){
-        return SessionClass::getInstance()->start();
-    }
-    public static function close(){
-        return SessionClass::getInstance()->close();
-    }
-    public static function set($key, $value){
-        return SessionClass::getInstance()->set($key, $value);
-    }
-    public static function get($key){
-        return SessionClass::getInstance()->get($key);
-    }
-    public static function del($key){
-        return SessionClass::getInstance()->del($key);
-    }
-    public static function export(){
-        return SessionClass::getInstance()->export();
-    }
-}
-
-class SessionClass{
     private static $instance = null;
     private $started = false;
 

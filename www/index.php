@@ -13,28 +13,28 @@ if(!preg_match('|^[a-z0-9_\.\?\&\=/\-\%]+$|i', $_SERVER['REQUEST_URI'])){
 }
 
 define('BASE_PATH', realpath(dirname(__FILE__).'/..'));
-define('INDEX_PATH', BASE_PATH.'/inc/index');
-define('ADMIN_PATH', BASE_PATH.'/inc/admin');
-define('MODELS_PATH', realpath(BASE_PATH.'/inc/models'));
+define('INDEX_PATH', BASE_PATH.'/App/index');
+define('ADMIN_PATH', BASE_PATH.'/App/admin');
+define('MODELS_PATH', realpath(BASE_PATH.'/App/models'));
 
 spl_autoload_register(function($className){//Автоподключим классы
     $tmp = explode('\\', $className);
-    $classPath = realpath(BASE_PATH.'/inc/'.implode('/', $tmp).'.php');
+    $classPath = realpath(BASE_PATH.DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, $tmp).'.php');
     if( $classPath)
         if( file_exists($classPath)) {
             require_once($classPath);
         }
 });
 
-require_once(BASE_PATH.'/inc/config.php');
-require_once(BASE_PATH.'/inc/core/DB.php');
+require_once(BASE_PATH.'/App/config.php');
+require_once(BASE_PATH.'/App/core/DB.php');
 require_once(BASE_PATH.'/smarty/Smarty.class.php');
 
-require_once(BASE_PATH.'/inc/core/Routes.php');
+require_once(BASE_PATH.'/App/core/Routes.php');
 $routes = [];
-require_once(BASE_PATH.'/inc/routes.php');
+require_once(BASE_PATH.'/App/routes.php');
 foreach( $routes as $routeUrl => $route )
-    \Core\Routes::addRoute($routeUrl, $route[0], $route[1], isset( $route[2] ) ? $route[2] : []);
-\Core\Routes::loadRoute($url);
+    \App\Core\Routes::getInstance()->addRoute($routeUrl, $route[0], $route[1], isset( $route[2] ) ? $route[2] : []);
+\App\Core\Routes::getInstance()->loadRoute($url);
 
-\Core\View::display();
+\App\Core\View::display();

@@ -1,5 +1,5 @@
 <?php
-namespace Core\Helpers;
+namespace App\Core\Helpers;
 class Http{
     public static function requestPost( $url, $post = '', $cookieFile = ''){
         if( is_array( $post )) $post = http_build_query( $post );
