@@ -1,30 +1,42 @@
 <?php
 namespace App\Controllers;
 
-class BaseController{
+use App\Core\View;
+
+class BaseController
+{
     protected $templateDir;
     protected $controllerDir;
     protected $queryParams;
     protected $mainTemplate = '404.tpl';
-    protected function postParams($key = null){
-        if(!is_null($key)){
-            if(isset($_POST[$key])){
+
+    public function __construct()
+    {
+        View::setCompileDir(BASE_PATH.'/templates_c');
+    }
+
+    protected function postParams($key = null)
+    {
+        if (!is_null($key)) {
+            if (isset($_POST[$key])) {
                 return $_POST[$key];
-            }else{
+            } else {
                 return null;
             }
-        }else{
+        } else {
             return $_POST;
         }
     }
-    protected function getParams($key = null){
-        if(!is_null($key)){
-            if(isset($_GET[$key])){
+
+    protected function getParams($key = null)
+    {
+        if (!is_null($key)) {
+            if (isset($_GET[$key])) {
                 return $_GET[$key];
-            }else{
+            } else {
                 return null;
             }
-        }else{
+        } else {
             return $_GET;
         }
     }

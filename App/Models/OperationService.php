@@ -1,7 +1,10 @@
 <?php
 namespace App\Models;
+
 use App\Core\DB;
-class OperationService{
+
+class OperationService
+{
     const OPERATION_GET_BALANCE = '-- OPERATION_GET_BALANCE
 SELECT SUM(`amount`) AS `amount`, `type`
 FROM `operations`
@@ -9,8 +12,9 @@ WHERE TRUE
 {if user_id}AND `user_id` = {{ i(user_id) }} {/if}
 GROUP BY `type`';
 
-    public function selectBalance( $data ){
-        return DB::query( self::OPERATION_GET_BALANCE, $data );
+    public function selectBalance( $data )
+    {
+        return DB::query(self::OPERATION_GET_BALANCE, $data);
     }
 
 }

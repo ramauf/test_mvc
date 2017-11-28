@@ -6,31 +6,39 @@ use App\Core\Session;
 use App\Core\View;
 use App\Models\OperationObject;
 use App\Models\OperationsCollection;
+use App\Models\UserObject;
 
-class Operations extends IndexController{
-
-    public function pageIndex( $status = 'empty'){
+class Operations extends IndexController
+{
+    public function pageIndex($status = 'empty')
+    {
         $user = Session::getInstance()->get('user');
         Session::getInstance()->close();
         $OperationsCollection = new OperationsCollection();
-        $OperationsCollection->begin();
         $OperationsCollection->fetch([
             'user_id' => $user['id'],
             'by_id' => 'desc'
         ]);
         $operations = $OperationsCollection->select()->asArray();
 
-        $currentBalance = 0;
-        $balance = $OperationsCollection->selectBalance()->asArray();//Запрос аналогичный предыдущему, чтобы продемонстрировать сервис
-        foreach( $balance as $operation ){
-            $currentBalance += ($operation['type'] == 'in' ? 1 : -1 ) * $operation['amount'];
-        }
+        $balanceByDirections = $OperationsCollection->selectBalanceByDirections()->asArray();
 
-        if( $this->postParams('address') !== null && $this->postParams('password') !== null && $this->postParams('amount') !== null ){
-            $amount = str_replace(',', '.', $this->postParams('amount'))*1;
-            $address = trim( $this->postParams('address'));
-            if( $currentBalance >= $amount && $amount > 0 && !empty( $address ) && md5( $this->postParams('password')) == $user['payPass'] && !empty( $this->postParams('address'))){
+
+        if ($this->postParams('address') !== null && $this->postParams('password') !== null && $this->postParams('amount') !== null) {
+            $amount = floatval(str_replace(',', '.', $this->postParams('amount')));
+            $address = trim($this->postParams('address'));
+
+            $UserObject = new UserObject();
+            $UserObject->begin();
+            $UserObject->loadById($user['id']);
+            if (!$UserObject->isLoaded()) {
+                $UserObject->rollback();
+                Http::redirect('/operations/fail');
+            }
+
+            if ($UserObject['balance'] >= $amount && $amount > 0 && !empty($address) && md5($this->postParams('password')) == $UserObject['payPass'] && !empty($this->postParams('address'))) {
                 $OperationObject = new OperationObject();
+                $OperationObject->begin();
                 $OperationObject->fetch([
                     'user_id' => $user['id'],
                     'amount' => $amount,
@@ -39,29 +47,34 @@ class Operations extends IndexController{
                     'date' => time()
                 ]);
                 $OperationObject->create();
-                $OperationsCollection->commit();
+                $UserObject->merge([
+                    'balance' => $UserObject['balance'] - $amount
+                ]);
+                $UserObject->update();
+                $UserObject->commit();
                 Http::redirect('/operations/success');
-            }else{
+            } else {
                 $OperationsCollection->rollback();
                 Http::redirect('/operations/fail');
             }
         }
-        $OperationsCollection->commit();
 
-        View::assign('status', $status );
-        View::assign('balance', $balance );
-        View::assign('currentBalance', $currentBalance );
-        View::assign('operations', $operations );
+        View::assign('status', $status);
+        View::assign('balanceByDirections', $balanceByDirections);
+        View::assign('currentBalance', $user['balance']);
+        View::assign('operations', $operations);
         View::assign('menuName', 'Финансы');
         View::assign('subTemplate', 'operations_list.tpl');
         View::addJSController('/js/index/operations.js');
     }
 
-    public function pageSuccess(){
+    public function pageSuccess()
+    {
         $this->pageIndex('success');
     }
 
-    public function pageFail(){
+    public function pageFail()
+    {
         $this->pageIndex('fail');
     }
 }

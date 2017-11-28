@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
         <section class="panel">
-            {foreach item = tabItem from = $balance}
+            {foreach item = tabItem from = $balanceByDirections}
                 {$tabItem.typeName}: {$tabItem.amount}<br />
             {/foreach}
             <h3>Текущий баланс: {$currentBalance}</h3>
@@ -22,7 +22,7 @@
 
 
 
-            {if $balance > 0}
+            {if $currentBalance > 0}
                 <button type="button" class="btn btn-primary" id="withdrawRequestButton">Вывести</button>
                 <div class="row" style="display:none;" id="withdrawRequestDiv">
                     <div class="col-xs-4">

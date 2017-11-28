@@ -1,0 +1,12 @@
+{
+    "name": "ramauf/test.ram",
+    "require": {
+        "smarty/smarty": "^3.1"
+    },
+    "authors": [
+        {
+            "name": "Zulla Rock",
+            "email": "ramoney@list.ru"
+        }
+    ]
+}

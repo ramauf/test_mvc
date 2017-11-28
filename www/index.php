@@ -13,9 +13,7 @@ if(!preg_match('|^[a-z0-9_\.\?\&\=/\-\%]+$|i', $_SERVER['REQUEST_URI'])){
 }
 
 define('BASE_PATH', realpath(dirname(__FILE__).'/..'));
-define('INDEX_PATH', BASE_PATH.'/App/index');
-define('ADMIN_PATH', BASE_PATH.'/App/admin');
-define('MODELS_PATH', realpath(BASE_PATH.'/App/models'));
+require_once(BASE_PATH.'/vendor/autoload.php');
 
 spl_autoload_register(function($className){//Автоподключим классы
     $tmp = explode('\\', $className);
@@ -28,7 +26,7 @@ spl_autoload_register(function($className){//Автоподключим клас
 
 require_once(BASE_PATH.'/App/config.php');
 require_once(BASE_PATH.'/App/core/DB.php');
-require_once(BASE_PATH.'/smarty/Smarty.class.php');
+//require_once(BASE_PATH.'/smarty/Smarty.class.php');
 
 require_once(BASE_PATH.'/App/core/Routes.php');
 $routes = [];
