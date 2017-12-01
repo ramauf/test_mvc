@@ -17,8 +17,7 @@ class OperationObject extends AbstractObject
             ->addField('amount', AbstractField::FIELD_STRING)
             ->addField('type', AbstractField::FIELD_STRING)
             ->addField('address', AbstractField::FIELD_STRING)
-            ->addField('date', AbstractField::FIELD_INTEGER)
-        ;
+            ->addField('date', AbstractField::FIELD_INTEGER);
     }
 
     public function getCreateFields()

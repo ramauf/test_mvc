@@ -16,25 +16,23 @@ class OperationsCollection extends AbstractCollection
     {
         return new OperationService();
     }
-    
+
     protected function getObject()
     {
         $EventObject = new OperationObject();
         $EventObject
-            ->addField('typeName', AbstractField::FIELD_STRING)
-        ;
+            ->addField('typeName', AbstractField::FIELD_STRING);
         return $EventObject;
     }
-    
+
     public function init()
     {
         $this
-            ->addField('id', AbstractField::FIELD_INTEGER )
-            ->addField('user_id', AbstractField::FIELD_INTEGER )
-            ->addField('by_id', AbstractField::FIELD_STRING )
-        ;
+            ->addField('id', AbstractField::FIELD_INTEGER)
+            ->addField('user_id', AbstractField::FIELD_INTEGER)
+            ->addField('by_id', AbstractField::FIELD_STRING);
     }
-    
+
     public function selectBalanceByDirections()
     {
         return $this->collect($this->getService()->selectBalance($this->export()));

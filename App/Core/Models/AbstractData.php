@@ -24,7 +24,7 @@ abstract class AbstractData implements \ArrayAccess
     final public function __set($key, $value)
     {
         if ($this->offsetExists($key)) {
-            $this->offsetSet( $key, $value );
+            $this->offsetSet($key, $value);
         }
     }
 
@@ -35,21 +35,24 @@ abstract class AbstractData implements \ArrayAccess
 
     final public function offsetGet($key)
     {
-        if (array_key_exists($key, $this->data))
+        if (array_key_exists($key, $this->data)) {
             return $this->data[$key]['value'];
+        }
         return null;
     }
 
     final public function offsetSet($key, $value)
     {
-        if (array_key_exists($key, $this->data))
+        if (array_key_exists($key, $this->data)) {
             $this->data[$key]['value'] = $value;
+        }
     }
 
     final public function offsetUnset($key)
     {
-        if (array_key_exists($key, $this->data))
+        if (array_key_exists($key, $this->data)) {
             $this->data[$key]['value'] = null;
+        }
     }
 
     final public function begin()
@@ -67,5 +70,7 @@ abstract class AbstractData implements \ArrayAccess
         DB::rollback();
     }
 
-    public function init(){}
+    public function init()
+    {
+    }
 }

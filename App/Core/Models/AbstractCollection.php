@@ -27,43 +27,46 @@ abstract class AbstractCollection extends AbstractData
     public function merge($data = [])
     {
         foreach ($this->fields as $fieldName => $fieldInfo) {
-            if (isset($data[$fieldName]))
+            if (isset($data[$fieldName])) {
                 $this->data[$fieldName]['value'] = $data[$fieldName];
+            }
         }
         return true;
     }
 
     public function select(array $params = [])
     {
-        if (empty($this->data))
+        if (empty($this->data)) {
             $this->fetch();
+        }
         $order = [];
         foreach ($this->export() as $ind => $val) {
-            if (substr( $ind, 0, 3 ) == 'by_') {
-                $order[substr( $ind, 3)] = $val;
+            if (substr($ind, 0, 3) == 'by_') {
+                $order[substr($ind, 3)] = $val;
                 unset($this[$ind]);
             }
         }
         if (!empty($order)) {
             $tmp = [];
             foreach ($order as $ind => $val) {
-                $tmp[] = $ind.' '.$val;
+                $tmp[] = $ind . ' ' . $val;
             }
-            $order = 'ORDER BY '.implode(', ', $tmp);
-        }else{
+            $order = 'ORDER BY ' . implode(', ', $tmp);
+        } else {
             $order = '';
         }
         $cond = [];
         foreach ($this->fields as $fieldName => $fieldInfo) {
-            if (!is_null( $this->data[$fieldName]['value'])) {
-                $cond[] = '`'.$fieldName.'` = {{ '. $fieldInfo['type'] .'('. $fieldName .') }}';
+            if (!is_null($this->data[$fieldName]['value'])) {
+                $cond[] = '`' . $fieldName . '` = {{ ' . $fieldInfo['type'] . '(' . $fieldName . ') }}';
             }
         }
-        $cond = empty( $cond ) ? '' : ' AND '.implode(' AND ', $cond);
-        $data =  DB::query('-- BASE_COLLECTION_SELECT
-SELECT * FROM `'.$this->table.'` WHERE TRUE '. $cond.' '.$order, $params + $this->export());
-        if (empty($data))
+        $cond = empty($cond) ? '' : ' AND ' . implode(' AND ', $cond);
+        $data = DB::query('-- BASE_COLLECTION_SELECT
+SELECT * FROM `' . $this->table . '` WHERE TRUE ' . $cond . ' ' . $order, $params + $this->export());
+        if (empty($data)) {
             return $this->emptyObject();
+        }
         return $this->collect($data);
     }
 

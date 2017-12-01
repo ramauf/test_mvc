@@ -5,8 +5,9 @@ class Http
 {
     public static function requestPost($url, $post = '', $cookieFile = '')
     {
-        if (is_array($post))
+        if (is_array($post)) {
             $post = http_build_query($post);
+        }
         $post = str_replace(array('%5Cr', '%5Cn'), array('%0D', '%0A'), $post);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -34,7 +35,7 @@ class Http
 
     public static function redirect($url)
     {
-        header('Location:'. $url);
+        header('Location:' . $url);
         exit;
     }
 }

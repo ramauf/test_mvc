@@ -12,7 +12,7 @@ class BaseController
 
     public function __construct()
     {
-        View::setCompileDir(BASE_PATH.'/templates_c');
+        View::setCompileDir(BASE_PATH . '/templates_c');
     }
 
     protected function postParams($key = null)

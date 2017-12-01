@@ -20,8 +20,9 @@ class Auth extends IndexController
                 View::assign('errors', ['Неверный логин или пароль']);
             }
         }
-        if (Session::getInstance()->get('user') != null)
+        if (Session::getInstance()->get('user') != null) {
             Http::redirect('/');
+        }
     }
 
     public function pageLogout()

@@ -16,24 +16,27 @@ class Session
 
     public function start()
     {
-        if (!$this->started)
+        if (!$this->started) {
             session_start();
+        }
         $this->started = true;
         return true;
     }
 
     public function close()
     {
-        if (!$this->started)
+        if (!$this->started) {
             session_write_close();
+        }
         $this->started = false;
         return true;
     }
 
     public function set($key, $value)
     {
-        if (!$this->started)
+        if (!$this->started) {
             $this->throwError('session not started');
+        }
         if (!is_array($key) && !is_object($key) && !is_null($key)) {
             $_SESSION[$key] = $value;
             return true;
@@ -44,8 +47,9 @@ class Session
 
     public function get($key)
     {
-        if (!$this->started)
+        if (!$this->started) {
             $this->throwError('session not started');
+        }
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         } else {
@@ -55,10 +59,11 @@ class Session
 
     public function del($key)
     {
-        if (!$this->started)
+        if (!$this->started) {
             $this->throwError('session not started');
+        }
         if (!is_array($key) && !is_object($key) && !is_null($key)) {
-            unset( $_SESSION[$key]);
+            unset($_SESSION[$key]);
             return true;
         } else {
             return false;
@@ -67,8 +72,9 @@ class Session
 
     public function export()
     {
-        if (!$this->started)
+        if (!$this->started) {
             $this->throwError('session not started');
+        }
         return $_SESSION;
     }
 

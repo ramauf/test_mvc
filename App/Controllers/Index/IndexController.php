@@ -12,7 +12,7 @@ class IndexController extends BaseController
     protected $authTemplate = 'main_auth.tpl';
     protected $unauthTemplate = 'main_unauth.tpl';
 
-    public function __construct( $params )
+    public function __construct($params)
     {
         parent::__construct();
         $this->queryParams = $params;

@@ -16,12 +16,13 @@ class Routes
 
     public function addRoute($url, $className, $methodName, $params)
     {
-        if (!empty($params)){
+        if (!empty($params)) {
             $params = array_flip($params);
-            foreach ($params as &$param)
+            foreach ($params as &$param) {
                 $param = null;
+            }
             $this->routes[$url] = [$className, 'page' . ucfirst($methodName), $params];
-        }else {
+        } else {
             $this->routes[$url] = [$className, 'page' . ucfirst($methodName), []];
         }
         return true;
@@ -29,11 +30,11 @@ class Routes
 
     public function loadRoute($url)
     {
-        $url = trim( $url, '/');
+        $url = trim($url, '/');
         foreach ($this->routes as $uri => &$route) {
-            $uri = trim( $uri, '/');
-            if (preg_match('|^'.$uri.'$|', $url, $m)) {
-                unset( $m[0] );
+            $uri = trim($uri, '/');
+            if (preg_match('|^' . $uri . '$|', $url, $m)) {
+                unset($m[0]);
                 foreach ($route[2] as $paramName => &$paramValue) {
                     $paramValue = current($m);
                     next($m);

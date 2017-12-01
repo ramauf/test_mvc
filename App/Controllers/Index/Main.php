@@ -8,9 +8,9 @@ class Main extends IndexController
 {
     public function pageIndex()
     {
-        if (is_null (Session::getInstance()->get('user'))) {
+        if (is_null(Session::getInstance()->get('user'))) {
             Http::redirect('/login');
-        }else{
+        } else {
             Http::redirect('/operations');
         }
     }

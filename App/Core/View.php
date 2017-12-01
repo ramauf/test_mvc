@@ -10,8 +10,9 @@ class View
 
     public static function addJSController($path)
     {
-        if(!CACHE_ENABLED)
-            $path.= '?anticache='.rand(1,10000);
+        if (!CACHE_ENABLED) {
+            $path .= '?anticache=' . rand(1, 10000);
+        }
         self::$JSControllers[$path] = $path;
     }
 
@@ -27,14 +28,14 @@ class View
 
     public static function setTemplateDir($templateDir)
     {
-        Smarty::getInstance()->setTemplateDir('../'.$templateDir);
+        Smarty::getInstance()->setTemplateDir('../' . $templateDir);
     }
 
     public static function setTemplate($template)
     {
         Smarty::getInstance()->setTemplate($template);
     }
-    
+
     public static function setCompileDir($compileDir)
     {
         Smarty::getInstance()->setCompileDir($compileDir);

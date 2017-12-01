@@ -11,22 +11,21 @@ class UserObject extends AbstractObject
     public function init()
     {
         $this
-            ->addField('id', AbstractField::FIELD_INTEGER )
+            ->addField('id', AbstractField::FIELD_INTEGER)
             ->setPrimary('id')
-            ->addField('login', AbstractField::FIELD_STRING )
-            ->addField('password', AbstractField::FIELD_STRING )
-            ->addField('payPass', AbstractField::FIELD_STRING )
-            ->addField('balance', AbstractField::FIELD_INTEGER )
-        ;
+            ->addField('login', AbstractField::FIELD_STRING)
+            ->addField('password', AbstractField::FIELD_STRING)
+            ->addField('payPass', AbstractField::FIELD_STRING)
+            ->addField('balance', AbstractField::FIELD_INTEGER);
     }
 
     public function beforeCreate()
     {
         $this['password'] = md5($this['password']);
-        unset( $this['id']);
+        unset($this['id']);
     }
 
-    public function login( $data )
+    public function login($data)
     {
         if (isset($data['login']) && isset($data['password'])) {
             $this->fetch([

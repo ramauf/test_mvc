@@ -12,7 +12,7 @@ WHERE TRUE
 {if user_id}AND `user_id` = {{ i(user_id) }} {/if}
 GROUP BY `type`';
 
-    public function selectBalance( $data )
+    public function selectBalance($data)
     {
         return DB::query(self::OPERATION_GET_BALANCE, $data);
     }

@@ -10,21 +10,24 @@ class Mysqli
         TRANS_MODE_READ_UNCOMMITTED = 'ISOLATION LEVEL READ UNCOMMITTED',
         TRANS_MODE_READ_COMMITTED = 'ISOLATION LEVEL READ COMMITTED',
         TRANS_MODE_REPEATABLE_READ = 'ISOLATION LEVEL REPEATABLE READ',
-        TRANS_MODE_SERIALIZABLE = 'ISOLATION LEVEL SERIALIZABLE'
-    ;
+        TRANS_MODE_SERIALIZABLE = 'ISOLATION LEVEL SERIALIZABLE';
     private static $instance = null;
     private $dbLink = '';
+
     public function __construct()
     {
-        $this->dbLink = @mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die ('SQLi_Error: cant connect to DB, please configure inc/config.php');
+        $this->dbLink = @mysqli_connect(DB_HOST, DB_USER, DB_PASS,
+            DB_NAME) or die ('SQLi_Error: cant connect to DB, please configure inc/config.php');
         mysqli_query($this->dbLink, 'SET NAMES `utf8`');
     }
 
     public function begin($transMode = self::TRANS_MODE_REPEATABLE_READ)
     {
-        Logger::getInstance()->log('sql_queries.txt', 'SET SESSION TRANSACTION '. $transMode);
+        Logger::getInstance()->log('sql_queries.txt', 'SET SESSION TRANSACTION ' . $transMode);
         Logger::getInstance()->log('sql_queries.txt', 'START TRANSACTION');
-        if (!mysqli_query($this->dbLink, 'SET SESSION TRANSACTION '. $transMode) || !mysqli_query($this->dbLink, 'START TRANSACTION')) {
+        if (!mysqli_query($this->dbLink, 'SET SESSION TRANSACTION ' . $transMode) || !mysqli_query($this->dbLink,
+                'START TRANSACTION')
+        ) {
             throw new \Exception('Could not begin transaction');
         }
         return true;
@@ -50,11 +53,12 @@ class Mysqli
 
     public function query($query, array $params = array())
     {
-        $query = $this->prepareQuery( $query, $params );
+        $query = $this->prepareQuery($query, $params);
         Logger::getInstance()->log('sql_queries.txt', $query);
         $result = mysqli_query($this->dbLink, $query);
-        if (!$result)
+        if (!$result) {
             $this->throwError(mysqli_error($this->dbLink));
+        }
         $return = array();
         while ($row = @mysqli_fetch_assoc($result)) {
             $return[] = $row;
@@ -74,8 +78,9 @@ class Mysqli
 
     public function __destruct()
     {
-        if ($this->dbLink)
+        if ($this->dbLink) {
             mysqli_close($this->dbLink);
+        }
     }
 
     public static function getInstance()
@@ -103,7 +108,7 @@ class Mysqli
                 return floatval($value);
             },
             's' => function ($value) {
-                return '\''.$this->escape($value).'\'';
+                return '\'' . $this->escape($value) . '\'';
             }
         ];
     }
@@ -111,12 +116,13 @@ class Mysqli
     private function prepareQuery($query, array $params)
     {
         $query = $this->parseValues($query, $params);
-        if (!preg_match('|\{ *if|i', $query))
+        if (!preg_match('|\{ *if|i', $query)) {
             return $query;
+        }
         foreach ($params as $key => $value) {
             View::assign($key, $value);
         }
-        return View::fetch('string:'.$query);
+        return View::fetch('string:' . $query);
     }
 
     private function parseValues($query, $params)

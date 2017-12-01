@@ -8,9 +8,10 @@ class Logger
 
     public function __construct()
     {
-        $this->logDir = BASE_PATH.'/logs';
-        if (!is_dir($this->logDir))
+        $this->logDir = BASE_PATH . '/logs';
+        if (!is_dir($this->logDir)) {
             mkdir($this->logDir, 0777);
+        }
     }
 
     public static function getInstance()
@@ -29,8 +30,8 @@ class Logger
         } else {
             $logData = $data;
         }
-        $logData = date('Y-m-d H:i:s').PHP_EOL.$logData.PHP_EOL.PHP_EOL;
-        file_put_contents($this->logDir.'/'.$file, $logData, FILE_APPEND);
+        $logData = date('Y-m-d H:i:s') . PHP_EOL . $logData . PHP_EOL . PHP_EOL;
+        file_put_contents($this->logDir . '/' . $file, $logData, FILE_APPEND);
         return true;
     }
 }
