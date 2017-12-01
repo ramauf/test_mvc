@@ -9,9 +9,6 @@ use App\Models\UserObject;
 
 class IndexController extends BaseController
 {
-    protected $authTemplate = 'main_auth.tpl';
-    protected $unauthTemplate = 'main_unauth.tpl';
-
     public function __construct($params)
     {
         parent::__construct();
@@ -19,7 +16,7 @@ class IndexController extends BaseController
         Session::getInstance()->start();
         View::setTemplateDir('templates/index');
         if (Session::getInstance()->get('user') === null) {
-            View::setTemplate($this->unauthTemplate);
+            View::setTemplate('main_unauth.tpl');
         } else {
             $UserObject = new UserObject();
             $UserObject->loadById(Session::getInstance()->get('user')['id']);
@@ -28,7 +25,7 @@ class IndexController extends BaseController
             } else {
                 Http::redirect('/login');
             }
-            View::setTemplate($this->authTemplate);
+            View::setTemplate('main_auth.tpl');
         }
     }
 

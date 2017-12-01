@@ -23,7 +23,6 @@ class Operations extends IndexController
 
         $balanceByDirections = $OperationsCollection->selectBalanceByDirections()->asArray();
 
-
         if ($this->postParams('address') !== null && $this->postParams('password') !== null && $this->postParams('amount') !== null) {
             $amount = floatval(str_replace(',', '.', $this->postParams('amount')));
             $address = trim($this->postParams('address'));
@@ -38,7 +37,6 @@ class Operations extends IndexController
 
             if ($UserObject['balance'] >= $amount && $amount > 0 && !empty($address) && md5($this->postParams('password')) == $UserObject['payPass'] && !empty($this->postParams('address'))) {
                 $OperationObject = new OperationObject();
-                $OperationObject->begin();
                 $OperationObject->fetch([
                     'user_id' => $user['id'],
                     'amount' => $amount,
@@ -54,7 +52,7 @@ class Operations extends IndexController
                 $UserObject->commit();
                 Http::redirect('/operations/success');
             } else {
-                $OperationsCollection->rollback();
+                $UserObject->rollback();
                 Http::redirect('/operations/fail');
             }
         }

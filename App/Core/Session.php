@@ -25,7 +25,7 @@ class Session
 
     public function close()
     {
-        if (!$this->started) {
+        if ($this->started) {
             session_write_close();
         }
         $this->started = false;
@@ -47,9 +47,6 @@ class Session
 
     public function get($key)
     {
-        if (!$this->started) {
-            $this->throwError('session not started');
-        }
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         } else {
@@ -72,9 +69,6 @@ class Session
 
     public function export()
     {
-        if (!$this->started) {
-            $this->throwError('session not started');
-        }
         return $_SESSION;
     }
 
