@@ -5,7 +5,7 @@ use App\Core\Connectors\Mysqli;
 
 class DB
 {
-    public static function begin($transMode = Mysqli::TRANS_MODE_REPEATABLE_READ)
+    public static function begin($transMode = Mysqli::TRANS_MODE_SERIALIZABLE)
     {
         return Mysqli::getInstance()->begin($transMode);
     }
